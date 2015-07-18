@@ -1,0 +1,6 @@
+peerjs pass
+p2p4gam3s
+
+Need PHP script that will take a project name and an id.
+On that PHP script it will return only the ids that are part of that project and add yours.
+Each one will also contain a time stamp. If that time stamp is expired on any of the ids, they are removed.

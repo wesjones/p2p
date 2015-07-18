@@ -1,0 +1,19 @@
+{
+  "name": "hb",
+  "version": "0.5.41",
+  "description": "Hummingbird Utilities",
+  "buildDir": "build",
+  "author": {
+    "name": "Obogo Team",
+    "url": "http://obogo.io/"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "hbjs": "^0.8.20"
+  },
+  "license": "MIT",
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

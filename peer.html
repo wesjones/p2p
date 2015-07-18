@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peer RTC</title>
+</head>
+<input type="text" id="msg"><input type="button" value="send" onclick="p2p.send(document.getElementById('msg').value)">
+<script src="build/hb.js"></script>
+<script src="js/peer.js"></script>
+<script src="js/p2p.js"></script>
+<script>
+    //TODO: Make this work without peer.js. Use index.html example.
+    var p2p = new P2P('g5ezqak33ze3766r', 'peerT', {id:'wes'});
+    p2p.connect();
+</script>
+</body>
+</html>
