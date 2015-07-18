@@ -49,7 +49,7 @@ function P2P(key, name, user) {
         }
     }
 
-    function connect() {
+    function connect(ready) {
         if (!peer) {
             peer = new Peer({key: key});
             peer.on('open', function (id) {
@@ -61,6 +61,7 @@ function P2P(key, name, user) {
             // listen on the connection
             peer.on('connection', function (conn) {
                 console.log('connected', conn);
+                ready && ready();
                 conn.on('open', function () {
                     console.log('open');
                     // we made a connection. slow down the ping.
