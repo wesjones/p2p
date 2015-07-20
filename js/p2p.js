@@ -4,6 +4,7 @@ function P2P(key, name, user) {
     var myId;
     var intvId;
     var options = {label: name, metadata: user};
+    var msgCallback;
 
     function startPing(intv, initCall) {
         clearInterval(intvId);
@@ -73,6 +74,7 @@ function P2P(key, name, user) {
                     // Receive messages
                     conn.on('data', function (data) {
                         console.info('Received', data);
+                        msgCallback && msgCallback(data);
                     });
 
                     // Send messages
@@ -83,6 +85,11 @@ function P2P(key, name, user) {
         }
     }
 
+    function onMessage(fn) {
+        msgCallback = fn;
+    }
+
     this.connect = connect;
     this.send = send;
+    this.onMessage = onMessage;
 }
