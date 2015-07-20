@@ -8,7 +8,7 @@ function P2P(key, name, user) {
 
     function startPing(intv, initCall) {
         clearInterval(intvId);
-        console.log('ping every ' + intv + 's');
+        log('ping every ' + intv + 's');
         intvId = setInterval(ping, intv * 1000);
         if (initCall) {
             ping();
@@ -19,22 +19,22 @@ function P2P(key, name, user) {
         if (!myId) {
             return;
         }
-        console.log('ping');
+        log('ping');
         hb.http.get(
             'http://codeguyz.com/rtc/peer_handshake.php?p=peer_test&id=' + myId,
             function (response) {
-                console.log(response);
+                log(response);
                 // we need to connect to all connections we are not connected to.
                 for (var i in response.data) {
                     if (i !== myId && !connectedPeers[i]) {
-                        console.log('attempt to connect to ' + i);
+                        log('attempt to connect to ' + i);
                         // start the connection
                         var conn = peer.connect(i, options);
                     }
                 }
             },
             function () {
-                console.log('failed');
+                log('failed');
             }
         );
     }
@@ -54,17 +54,17 @@ function P2P(key, name, user) {
         if (!peer) {
             peer = new Peer({key: key});
             peer.on('open', function (id) {
-                console.log('My peer ID is: ' + id);
+                log('My peer ID is: ' + id);
                 myId = id;
                 startPing(10, true);
             });
 
             // listen on the connection
             peer.on('connection', function (conn) {
-                console.log('connected', conn);
+                log('connected', conn);
                 ready && ready();
                 conn.on('open', function () {
-                    console.log('open');
+                    log('open');
                     // we made a connection. slow down the ping.
                     startPing(60);
                     if (!connectedPeers[conn.peer]) {
@@ -73,13 +73,13 @@ function P2P(key, name, user) {
                     }
                     // Receive messages
                     conn.on('data', function (data) {
-                        console.info('Received', data);
+                        info('Received', data);
                         msgCallback && msgCallback(data);
                     });
 
                     // Send messages
                     //            conn.send('Hello!');
-                    console.log(peer.connections[conn.peer]);
+                    log(peer.connections[conn.peer]);
                 });
             });
         }
@@ -89,6 +89,19 @@ function P2P(key, name, user) {
         msgCallback = fn;
     }
 
+    function log() {
+        if (window.console && console.log) {
+            console.log.apply(console, arguments);
+        }
+    }
+
+    function info() {
+        if (window.console && console.info) {
+            console.info.apply(console, arguments);
+        }
+    }
+
+    this.debug = false;
     this.connect = connect;
     this.send = send;
     this.onMessage = onMessage;
