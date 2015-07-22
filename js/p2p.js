@@ -1,4 +1,5 @@
 function P2P(key, name, user) {
+    var self = this;
     var peer;
     var connectedPeers = {};
     var myId;
@@ -90,13 +91,13 @@ function P2P(key, name, user) {
     }
 
     function log() {
-        if (window.console && console.log) {
+        if (self.debug && window.console && console.log) {
             console.log.apply(console, arguments);
         }
     }
 
     function info() {
-        if (window.console && console.info) {
+        if (self.debug && window.console && console.info) {
             console.info.apply(console, arguments);
         }
     }
